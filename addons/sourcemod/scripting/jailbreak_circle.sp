@@ -1,9 +1,6 @@
 #pragma newdecls required
 #pragma semicolon 1
 
-#include <sourcemod>
-#include <sdktools>
-#include <multicolors>
 #include <EverGames_JailBreak>
 
 #define PLUGIN_NAME JB_PLUGIN_NAME ... " - Marker Circle"

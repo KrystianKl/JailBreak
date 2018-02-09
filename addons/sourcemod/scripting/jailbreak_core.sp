@@ -1,10 +1,7 @@
 #pragma newdecls required
 #pragma semicolon 1
 
-#include <sourcemod>
-#include <cstrike>
 #include <clientprefs>
-#include <multicolors>
 #include <EverGames_JailBreak>
 
 #define PLUGIN_NAME JB_PLUGIN_NAME ... " - System Core"
@@ -325,6 +322,8 @@ public Action Event_OnRoundEnd(Handle event, const char[] name, bool dontBroadca
 public Action Event_OnPlayerSpawn(Handle event, const char[] name, bool dontBroadcast)
 {
 	int client = GetClientOfUserId(GetEventInt(event, "userid"));
+	
+	RemoveAllWeapons(client, "knife");
 	
 	CreateTimer(0.0, Timer_RemoveRadar, client);
 }

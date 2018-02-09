@@ -1,9 +1,6 @@
 #pragma newdecls required
 #pragma semicolon 1
 
-#include <sdktools>
-#include <cstrike>
-#include <multicolors>
 #include <EverGames_JailBreak>
 
 #define DATAFILE "smartjaildoors.txt"
