@@ -5,7 +5,6 @@
 #include <cstrike>
 #include <clientprefs>
 #include <multicolors>
-#include <smartjaildoors>
 #include <EverGames_JailBreak>
 
 #define PLUGIN_NAME JB_PLUGIN_NAME ... " - System Core"
@@ -303,7 +302,7 @@ public Action Event_OnRoundStart(Handle event, const char[] name, bool dontBroad
 			setCaptain(clients[GetRandomInt(0, clientsCount-1)]);
 		} else {
 			CPrintToChatAll("\x0B[EverGames] \x06Aktualnie nie ma graczy w Strażnikach...");
-			SJD_OpenDoors();
+			JailBreak_OpenDoors();
 		}
 	} else {
 		CurrentCaptain = -1;
