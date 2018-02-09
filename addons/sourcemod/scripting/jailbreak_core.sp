@@ -323,7 +323,7 @@ public Action Event_OnPlayerSpawn(Handle event, const char[] name, bool dontBroa
 {
 	int client = GetClientOfUserId(GetEventInt(event, "userid"));
 	
-	RemoveAllWeapons(client, "knife");
+	RemoveAllWeapons(client, "weapon_knife");
 	
 	CreateTimer(0.0, Timer_RemoveRadar, client);
 }
