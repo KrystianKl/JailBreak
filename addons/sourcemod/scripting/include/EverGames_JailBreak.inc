@@ -30,9 +30,16 @@
 #define JB_PLUGIN_VERSION "2.1"
 #define JB_PLUGIN_URL "EverGames.pl"
 
+#define MAX_WEAPONS	48
+
 #define JB_GUARDS 1
 #define JB_PRISIONERS 2
 #define JB_BOTH 3
+
+#include <sourcemod>
+#include <cstrike>
+#include <sdktools>
+#include <multicolors>
 
 /**
  * Open jail's doors on current map saved in config.
@@ -219,6 +226,48 @@ stock bool VIP(int client) {
  * Check if a client index is valid.
  */
 
+stock void RemoveAllWeapons(client, const char[] exclude="")
+{
+	int offset = FindDataMapInfo(client, "m_hMyWeapons") - 4;
+
+	for (int i = 0; i < MAX_WEAPONS; i++) {
+		offset += 4;
+
+		int weapon = GetEntDataEnt2(client, offset);
+
+		if (!IsValidEdict(weapon)) {
+			continue;
+		}
+		
+		if(!CheckWeaponClass(weapon, "weapon_", true)) {
+			continue;
+		}
+
+		if (exclude[0] != '\0' && CheckWeaponClass(weapon, exclude)) {
+			SetEntPropEnt(client, Prop_Data, "m_hActiveWeapon", weapon);
+			ChangeEdictState(client, FindDataMapInfo(client, "m_hActiveWeapon"));
+			continue;
+		}
+
+		if (RemovePlayerItem(client, weapon)) {
+			AcceptEntityInput(weapon, "Kill");
+		}
+	}
+}
+
+stock bool CheckWeaponClass(int entity, const char[] ClassName, bool partialMatch = false)
+{
+	char Entity_ClassName[64];
+	GetEntPropString(entity, Prop_Data, "m_iClassname", Entity_ClassName, sizeof(Entity_ClassName));
+
+	if (partialMatch) {
+		return (StrContains(Entity_ClassName, ClassName) != -1);
+	}
+	
+	return StrEqual(Entity_ClassName, ClassName);
+}
+
+ 
 stock bool IsValidClient(int client)
 {
 	if (client > 0 && client <= MaxClients) {
