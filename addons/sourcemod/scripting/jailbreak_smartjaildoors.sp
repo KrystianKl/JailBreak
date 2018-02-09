@@ -373,8 +373,8 @@ public Action Command_SJDMenu(int client, int args)
 
 void ShowSJDMenu2(int client)
 {
-	if(Owner(client)) {
-		CPrintToChat(client, "\x0B[EverGames]\x06 Nie masz uprawnień!");
+	if(!Owner(client)) {
+		CPrintToChat(client, "\x0B[EverGames]\x06 Nie masz uprawnieńdo tej komendy!");
 		return;
 	}
 	
