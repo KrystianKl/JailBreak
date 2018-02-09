@@ -157,8 +157,6 @@ void DeleteDoor(const char[] name)
 	g_kv.JumpToKey("doors");
 	g_kv.JumpToKey(name);
 	g_kv.DeleteThis();
-	if (!g_kv.GotoFirstSubKey())
-		g_kv.DeleteThis();
 	g_kv.Rewind();
 	g_kv.ExportToFile(DATAFILE);
 }
@@ -374,7 +372,7 @@ public Action Command_SJDMenu(int client, int args)
 void ShowSJDMenu2(int client)
 {
 	if(!Owner(client)) {
-		CPrintToChat(client, "\x0B[EverGames]\x06 Nie masz uprawnieńdo tej komendy!");
+		CPrintToChat(client, "\x0B[EverGames]\x06 Nie masz uprawnień do tej komendy!");
 		return;
 	}
 	
@@ -448,7 +446,7 @@ public int SJDMenu2_DoorsSubMenu(Menu menu, MenuAction action, int param1, int p
 							CPrintToChat(param1, "\x0B[EverGames]\x06 Obiekt nie ma nazwy!");
 							SJDMenu2_ShowDoorsSubMenu(param1, true);
 						} else {
-							ShowConfirmMenu(param1, SJDMenu2_ConfirmSaveDoor, target, "EverGames.pl » Potwierdź usunięcie drzwi: %s", name);
+							ShowConfirmMenu(param1, SJDMenu2_ConfirmSaveDoor, target, "EverGames.pl » Potwierdź zapisanie drzwi: %s", name);
 						}
 					}
 				}
@@ -478,7 +476,7 @@ public void SJDMenu2_ConfirmSaveDoor(int client, bool result, any entity)
 		SaveDoorByEnt(entity);
 		char name[64];
 		GetEntityName(entity, name, sizeof(name));
-		CPrintToChat(client, "\x0B[EverGames]\x06 Drzwi \x07%s\x06zostały zapisane!", name);
+		CPrintToChat(client, "\x0B[EverGames]\x06 Drzwi \x07%s\x06 zostały zapisane!", name);
 	}
 	
 	if (IsClientInGame(client) && IsPlayerAlive(client))
@@ -535,7 +533,7 @@ public void SJDMenu2_ConfirmDeleteDoor(int client, bool result, any data)
 		char name[64];
 		Pack.ReadString(name, sizeof(name));
 		DeleteDoor(name);
-		CPrintToChat(client, "\x0B[EverGames]\x06 Drzwi \x07%s\x06zostały usunięte!", name);
+		CPrintToChat(client, "\x0B[EverGames]\x06 Drzwi \x07%s\x06 zostały usunięte!", name);
 	}
 	
 	delete Pack;

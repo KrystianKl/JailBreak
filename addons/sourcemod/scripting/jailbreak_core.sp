@@ -175,6 +175,7 @@ public void OnPluginStart()
 	
 	HookEvent("round_start", Event_OnRoundStart);
 	HookEvent("round_end", Event_OnRoundEnd);
+	HookEvent("player_spawn", Event_OnPlayerSpawn);
 	HookEvent("player_death", Event_OnPlayerDeath);
 	
 	RegConsoleCmd("sm_setcredits", Command_SetCredits);
@@ -302,9 +303,13 @@ public Action Event_OnRoundStart(Handle event, const char[] name, bool dontBroad
 			setCaptain(clients[GetRandomInt(0, clientsCount-1)]);
 		} else {
 			CPrintToChatAll("\x0B[EverGames] \x06Aktualnie nie ma graczy w Strażnikach...");
+			CPrintToChatAll("\x0B[EverGames] \x06Z tego względu cele zostały otwarte!");
 			JailBreak_OpenDoors();
 		}
-	} else {
+	} else if(StrEqual(g_cCurrentRound, "None", false)) {
+		CPrintToChatAll("\x0B[EverGames] \x06Aktualnie nie została wybrana żadna runda...");
+		CPrintToChatAll("\x0B[EverGames] \x06Z tego względu cele zostały otwarte!");
+		JailBreak_OpenDoors();
 		CurrentCaptain = -1;
 	}
 }
@@ -315,6 +320,13 @@ public Action Event_OnRoundEnd(Handle event, const char[] name, bool dontBroadca
 	
 	LoopValidClients(i)
 		g_bFreeDay[i] = false;
+}
+
+public Action Event_OnPlayerSpawn(Handle event, const char[] name, bool dontBroadcast)
+{
+	int client = GetClientOfUserId(GetEventInt(event, "userid"));
+	
+	CreateTimer(0.0, Timer_RemoveRadar, client);
 }
 
 public Action Event_OnPlayerDeath(Handle event, const char[] name, bool dontBroadcast)
@@ -388,6 +400,10 @@ public void CreateMenuClient(int client)
 			RemoveFromArray(Array_ShopItems_Clon, ArrayIndex);
 		}
 		
+		if(GetArraySize(Array_ShopItems_Clon) == 0) {
+			CPrintToChat(client, "\x0B[EverGames]\x06 Nie ma ani jednego przedmiotu w sklepie!");
+		}
+		
 		CloseHandle(Array_ShopItems_Clon);
 		SetMenuExitButton(g_hMenu[client], true);
 	}
@@ -445,6 +461,11 @@ public Action Timer_SetNewCaptain(Handle timer)
 			setCaptain(clients[GetRandomInt(0, clientsCount-1)]);
 		}
 	}
+}
+
+public Action Timer_RemoveRadar(Handle Timer, any client)
+{
+	SetEntProp(client, Prop_Send, "m_iHideHUD", GetEntProp(client, Prop_Send, "m_iHideHUD") | 1<<12);
 }
 
 public Action Command_UserCredits(int client, int args)
