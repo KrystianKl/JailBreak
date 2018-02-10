@@ -67,13 +67,13 @@ native void JailBreak_IsMapConfigured(const char[] mapName);
  * @param Client			Client index.      
  */
 
-native void JailBreak_IsCaptain(int client);
+native bool JailBreak_IsCaptain(int client);
 
 /**
  * Get captain index (client index).      
  */
 
-native void JailBreak_GetCaptain(int client);
+native int JailBreak_GetCaptain(int client);
 
 /**
  * Set new captain and remove old.
