@@ -8,6 +8,7 @@
 
 int CurrentCaptain = -1;
 int g_iCredits[MAXPLAYERS+1] = { 0, ... };
+int Collision_Offsets = -1;
 
 bool g_bFreeDay[MAXPLAYERS+1] = { false, ... };
 bool g_bCaptainMenu = false;
@@ -19,6 +20,9 @@ Handle OnCaptainSet = null;
 Handle OnItemBought = null;
 Handle Array_ShopItems = null;
 Handle g_hMenu[MAXPLAYERS+1];
+
+float g_fGravity[MAXPLAYERS + 1];
+MoveType gMT_MoveType[MAXPLAYERS + 1];
 
 enum ShopItem
 {
@@ -64,7 +68,6 @@ public Native_SetCaptain(Handle plugin, int argc)
 	
 	removeCaptain(client, 0);
 	setCaptain(client);
-	return CurrentCaptain;
 }
 
 public Native_AddItem(Handle plugin, int argc)
@@ -155,6 +158,8 @@ public Plugin myinfo =
 
 public void OnPluginStart()
 {
+	Collision_Offsets = FindSendPropInfo("CBaseEntity", "m_CollisionGroup");
+	
 	c_GameCredits = RegClientCookie("JailBreak_Credits", "JailBreak_Credits", CookieAccess_Private);
 	
 	Array_ShopItems = CreateArray(66);
@@ -180,6 +185,28 @@ public void OnPluginStart()
 	LoopValidClients(i)
 		if(AreClientCookiesCached(i))
 			OnClientCookiesCached(i);
+}
+
+public void OnGameFrame()
+{
+	LoopValidClients(i)
+		if(IsPlayerAlive(i)) {
+			MoveType MT_MoveType = GetEntityMoveType(i);
+			float fGravity = GetEntityGravity(i);
+			if(MT_MoveType == MOVETYPE_LADDER) {
+				if(fGravity != 0.0)
+					g_fGravity[i] = fGravity;
+			} else {
+				if(gMT_MoveType[i] == MOVETYPE_LADDER)
+					SetEntityGravity(i, g_fGravity[i]);
+				
+				g_fGravity[i] = fGravity;
+			}
+			gMT_MoveType[i] = MT_MoveType;
+		} else {
+			g_fGravity[i] = 1.0;
+			gMT_MoveType[i] = MOVETYPE_WALK;
+		}
 }
 
 public void OnClientCookiesCached(client)
@@ -323,7 +350,10 @@ public Action Event_OnPlayerSpawn(Handle event, const char[] name, bool dontBroa
 {
 	int client = GetClientOfUserId(GetEventInt(event, "userid"));
 	
-	RemoveAllWeapons(client, "weapon_knife");
+	RemoveAllWeapons(client, "");
+	GivePlayerItem(client, "weapon_knife");
+	
+	SetEntData(client, Collision_Offsets, 2, 1, true);
 	
 	CreateTimer(0.0, Timer_RemoveRadar, client);
 }
@@ -576,4 +606,12 @@ public Action Command_RemoveCaptain(int client, int args)
 	}
 	
 	return Plugin_Handled;
+}
+
+public void OnEntityCreated(int entity, const char[] classname)
+{
+	if(StrContains(classname, "_projectile") != -1)
+	{
+		SetEntData(entity, Collision_Offsets, 2, 1, true);
+	}
 }
