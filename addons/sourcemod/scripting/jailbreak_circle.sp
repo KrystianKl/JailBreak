@@ -5,7 +5,6 @@
 
 #define PLUGIN_NAME JB_PLUGIN_NAME ... " - Marker Circle"
 
-bool g_bCanMarker[MAXPLAYERS + 1];
 bool g_bMarkerSetup[MAXPLAYERS + 1];
 
 int g_iBeamSprite = -1;
