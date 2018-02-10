@@ -109,7 +109,6 @@ void SetGlobalCvars(int RoundTime, int HostiesLR, int TeamMatesEnemies, int Grav
 	SetCvar("mp_roundtime_defuse", RoundTime);
 	SetCvar("mp_teammates_are_enemies", TeamMatesEnemies);
 	SetCvar("sm_hosties_lr", HostiesLR);
-	SetCvar("sm_afk_enable", AntiCamp);
 	SetCvar("sm_anticamp_enable", AntiCamp);
 	SetCvar("sv_gravity", Gravity);
 	SetCvar("sv_airaccelerate", 580);

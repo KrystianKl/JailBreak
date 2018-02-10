@@ -97,14 +97,6 @@ public Action Command_Beacons(int client, int args)
 		return Plugin_Handled;
 	}
 	
-	char sCommand[32];
-	GetCmdArg(0, sCommand, sizeof(sCommand));
-	
-	if (client > 0)
-	{
-		g_bCanMarker[client] = StrContains(sCommand, "+") != -1;
-	}
-	
 	return Plugin_Handled;
 }
 
@@ -115,7 +107,7 @@ public Action OnRoundEnd(Handle:event, const String:name[], bool:dontBroadcast)
 
 public Action OnPlayerRunCmd(int client, int &buttons, int &impulse, float vel[3], float angles[3], int &weapon)
 {
-	if (buttons & IN_ATTACK2 || g_bCanMarker[client] && !JailBreak_isRoundActive())
+	if (buttons & IN_ATTACK2 && !JailBreak_isRoundActive())
 	{
 		if (JailBreak_IsCaptain(client)) 
 		{

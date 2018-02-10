@@ -425,7 +425,7 @@ public void removeCaptain(int client, int natives)
 public void setCaptain(int client)
 {
 	CPrintToChatAll("\x0B[EverGames]\x07 Nowym Głównym Strażnikiem został:", client);
-	CPrintToChatAll("\x0B[EverGames]\x07 » \x06%N", client);
+	CPrintToChatAll("\x0B[EverGames]\x07 » \x03%N", client);
 	SetEntityRenderColor(client, 0, 130, 210, 255);
 	
 	if(g_bCaptainMenu) {

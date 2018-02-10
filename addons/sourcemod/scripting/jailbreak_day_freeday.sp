@@ -19,7 +19,13 @@ public Plugin myinfo =
 public void OnPluginStart()
 {
 	HookEvent("round_start", Event_OnRoundStart);
+	HookEvent("round_end", Event_OnRoundEnd);
 	HookEvent("player_spawn", Event_OnPlayerSpawn);
+}
+
+public Action Event_OnRoundEnd(Handle event, const char[] name, bool dontBroadcast)
+{
+	g_bRoundStarted = true;
 }
 
 public Action Event_OnPlayerSpawn(Handle event, const char[] name, bool dontBroadcast)
@@ -36,6 +42,8 @@ public Action Event_OnPlayerSpawn(Handle event, const char[] name, bool dontBroa
 	int client = GetClientOfUserId(GetEventInt(event, "userid"));
 	
 	if(!g_bRoundStarted) {
+		SetEntProp(client, Prop_Data, "m_iFrags", GetEntProp(client, Prop_Data, "m_iFrags") + 1);
+		SetEntProp(client, Prop_Data, "m_iDeaths", GetEntProp(client, Prop_Data, "m_iDeaths") - 1);
 		ForcePlayerSuicide(client);
 		CPrintToChat(client, "\x0B[EverGames]\x06 Musisz poczekać do końca zabawy!");
 	}
@@ -64,11 +72,16 @@ public Action Event_OnRoundStart(Handle event, const char[] name, bool dontBroad
 				JailBreak_SetFreeDay(i);
 			}
 	
-	g_bRoundStarted = false;
+	CreateTimer(5.0, DisableRespawn);
 	
 	JailBreak_OpenDoors();
 	JailBreak_StartMessage();
 	return Plugin_Handled;
+}
+
+public Action DisableRespawn(Handle timer)
+{
+	g_bRoundStarted = false;
 }
 
 public void JailBreak_StartMessage()
