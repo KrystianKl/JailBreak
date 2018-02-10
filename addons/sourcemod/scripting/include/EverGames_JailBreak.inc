@@ -30,7 +30,7 @@
 #define JB_PLUGIN_VERSION "2.1"
 #define JB_PLUGIN_URL "EverGames.pl"
 
-#define MAX_WEAPONS	48
+#define MAX_WEAPONS	49
 
 #define JB_GUARDS 1
 #define JB_PRISIONERS 2
