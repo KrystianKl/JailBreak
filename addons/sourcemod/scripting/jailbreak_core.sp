@@ -15,6 +15,32 @@ bool g_bFreeDay[MAXPLAYERS+1] = { false, ... };
 bool g_bCaptainMenu = false;
 
 char g_cCurrentRound[128] = "None";
+char g_sRadioCMDs[][] =  {
+	"coverme",
+	"takepoint",
+	"holdpos",
+	"regroup",
+	"followme",
+	"takingfire",
+	"go",
+	"fallback",
+	"sticktog",
+	"getinpos",
+	"stormfront",
+	"report",
+	"roger",
+	"enemyspot",
+	"needbackup",
+	"sectorclear",
+	"inposition",
+	"reportingin",
+	"getout",
+	"negative",
+	"enemydown",
+	"compliment",
+	"thanks",
+	"cheer"
+};
 
 Handle c_GameCredits = null;
 Handle OnCaptainSet = null;
@@ -184,6 +210,11 @@ public void OnPluginStart()
 	AddCommandListener(Command_BlockSuicide, "killvector");
 	AddCommandListener(Command_BlockSuicide, "explode");
 	AddCommandListener(Command_BlockSuicide, "explodevector");
+	
+	for (int i = 0; i < sizeof(g_sRadioCMDs); i++)
+	{
+		AddCommandListener(Command_RadioCMDs, g_sRadioCMDs[i]);
+	}
 	
 	HookEvent("round_start", Event_OnRoundStart);
 	HookEvent("round_end", Event_OnRoundEnd);
@@ -652,6 +683,11 @@ public Action Command_Drop(int client, const char[] command, int args)
 		}
 	}
 	return Plugin_Continue;
+}
+
+public Action Command_RadioCMDs(int client, const char[] command, int args)
+{
+	return Plugin_Handled;
 }
 
 public Action Command_BlockSuicide(int client, const char[] command, int args)
