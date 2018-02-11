@@ -321,6 +321,8 @@ public int DIDMenuHandler(Handle menu, MenuAction action, int client, int itemNu
 
 public Action Event_OnRoundStart(Handle event, const char[] name, bool dontBroadcast)
 {
+	ServerCommand("sm_broomknife");
+	
 	if(StrEqual(g_cCurrentRound, "Simon", false)) {
 		CreateTimer(2.0, Timer_MenuCaptain);
 		
@@ -358,8 +360,7 @@ public Action Event_OnPlayerSpawn(Handle event, const char[] name, bool dontBroa
 {
 	int client = GetClientOfUserId(GetEventInt(event, "userid"));
 	
-	RemoveAllWeapons(client, "");
-	GivePlayerItem(client, "weapon_knife");
+	RemoveAllWeapons(client, "weapon_knife");
 	
 	SetEntData(client, Collision_Offsets, 2, 1, true);
 	
