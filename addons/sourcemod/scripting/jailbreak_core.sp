@@ -179,6 +179,11 @@ public void OnPluginStart()
 	RegConsoleCmd("sm_setcredits", Command_SetCredits);
 	
 	AddCommandListener(Command_Drop, "drop");
+	AddCommandListener(Command_BlockSuicide, "kill");
+	AddCommandListener(Command_BlockSuicide, "killserver");
+	AddCommandListener(Command_BlockSuicide, "killvector");
+	AddCommandListener(Command_BlockSuicide, "explode");
+	AddCommandListener(Command_BlockSuicide, "explodevector");
 	
 	HookEvent("round_start", Event_OnRoundStart);
 	HookEvent("round_end", Event_OnRoundEnd);
@@ -646,6 +651,12 @@ public Action Command_Drop(int client, const char[] command, int args)
 		}
 	}
 	return Plugin_Continue;
+}
+
+public Action Command_BlockSuicide(int client, const char[] command, int args)
+{
+	CPrintToChat(client, "\x0B[EverGames]\x07 Nie możesz popełnić samobójstwa!");
+	return Plugin_Handled;
 }
 
 public void OnEntityCreated(int entity, const char[] classname)
