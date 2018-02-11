@@ -218,7 +218,7 @@ public MenuHandlerSTO(Handle menu, MenuAction action, int client, int param2)
 				target = i;
 		}
 		
-		ChangeClientTeam(target, 3);
+		ChangeClientTeam(target, CS_TEAM_SPECTATOR);
 		
 		CPrintToChatAll("\x0B[EverGames] \x03%N \x06został przerzucony do Widzów przez \x07%N\x06.", target, client);
 		
