@@ -165,8 +165,11 @@ public Action GiveWeapons(Handle timer, any client)
 		JailBreak_GetRound(CurrentRound);
 		
 		if(JailBreak_isRoundActive())
-			if(!StrEqual(CurrentRound, "Simon", false) && GetClientTeam(client) == CS_TEAM_CT || !StrEqual(CurrentRound, "War", false) || !StrEqual(CurrentRound, "War Total", false) || !StrEqual(CurrentRound, "Zombies", false) && GetClientTeam(client) == CS_TEAM_T)
+			if(!StrEqual(CurrentRound, "War", false) || !StrEqual(CurrentRound, "War Total", false) || !StrEqual(CurrentRound, "Zombies", false) && GetClientTeam(client) == CS_TEAM_T)
 				return;
+				
+		if(StrEqual(CurrentRound, "Simon", false) && GetClientTeam(client) != CS_TEAM_CT)
+			return;
 		
 		g_bWeaponsDistributed[client] = false;
 		
@@ -352,8 +355,11 @@ void GiveSavedWeapons(int client)
 		JailBreak_GetRound(CurrentRound);
 		
 		if(JailBreak_isRoundActive())
-			if(!StrEqual(CurrentRound, "Simon", false) && GetClientTeam(client) == CS_TEAM_CT || !StrEqual(CurrentRound, "War", false) || !StrEqual(CurrentRound, "War Total", false) || (!StrEqual(CurrentRound, "Zombies", false) && GetClientTeam(client) == CS_TEAM_T))
+			if(!StrEqual(CurrentRound, "War", false) || !StrEqual(CurrentRound, "War Total", false) || (!StrEqual(CurrentRound, "Zombies", false) && GetClientTeam(client) == CS_TEAM_T))
 				return;
+		
+		if(StrEqual(CurrentRound, "Simon", false) && GetClientTeam(client) != CS_TEAM_CT)
+			return;
 		
 		if(GetPlayerWeaponSlot(client, CS_SLOT_PRIMARY) == -1) {
 			if (StrEqual(g_sPrimaryWeapon[client], "Random")) {
