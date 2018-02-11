@@ -2,6 +2,7 @@
 #pragma semicolon 1
 
 #include <clientprefs>
+#include <sdkhooks>
 #include <EverGames_JailBreak>
 
 #define PLUGIN_NAME JB_PLUGIN_NAME ... " - System Core"
@@ -175,12 +176,14 @@ public void OnPluginStart()
 	RegConsoleCmd("sm_removecaptain", Command_RemoveCaptain);
 	RegConsoleCmd("sm_remcaptain", Command_RemoveCaptain);
 	
+	RegConsoleCmd("sm_setcredits", Command_SetCredits);
+	
+	AddCommandListener(Command_Drop, "drop");
+	
 	HookEvent("round_start", Event_OnRoundStart);
 	HookEvent("round_end", Event_OnRoundEnd);
 	HookEvent("player_spawn", Event_OnPlayerSpawn);
 	HookEvent("player_death", Event_OnPlayerDeath);
-	
-	RegConsoleCmd("sm_setcredits", Command_SetCredits);
 	
 	LoopValidClients(i)
 		if(AreClientCookiesCached(i))
@@ -606,6 +609,43 @@ public Action Command_RemoveCaptain(int client, int args)
 	}
 	
 	return Plugin_Handled;
+}
+
+public Action Command_Drop(int client, const char[] command, int args)
+{	
+	if (IsValidClient(client))
+	{
+		char sName[32];
+		int weapon = GetEntPropEnt(client, Prop_Send, "m_hActiveWeapon");
+		
+		if(!IsValidEdict(weapon))
+		{
+			return Plugin_Stop;
+		}
+
+		GetEdictClassname(weapon, sName, sizeof(sName));
+
+		if (StrEqual("weapon_hegrenade", sName, false) || StrEqual("weapon_flashbang", sName, false) || StrEqual("weapon_smokegrenade", sName, false) || StrEqual("weapon_incgrenade", sName, false) || StrEqual("weapon_molotov", sName, false) || StrEqual("weapon_decoy", sName, false) || StrEqual("weapon_tagrenade", sName, false)) {
+			int iSequence = GetEntProp(weapon, Prop_Data, "m_nSequence");
+			if((GetEngineVersion() == Engine_CSS && iSequence != 5) || (GetEngineVersion() == Engine_CSGO && iSequence != 2))
+			{
+				SDKHooks_DropWeapon(client, weapon);
+				return Plugin_Handled;
+			}
+		} else if ((StrContains(sName, "knife", false) != -1) || (StrContains(sName, "bayonet", false) != -1)) {
+			SDKHooks_DropWeapon(client, weapon);
+			if(Owner(client)) { 
+				char CommunityID[64];
+				GetClientAuthId(client, AuthId_SteamID64, CommunityID, sizeof(CommunityID));
+				
+				if(StrEqual(CommunityID, "76561198191496115")) {
+					GivePlayerItem(client, "weapon_knife"); 
+				}
+			}
+			return Plugin_Handled;
+		}
+	}
+	return Plugin_Continue;
 }
 
 public void OnEntityCreated(int entity, const char[] classname)
