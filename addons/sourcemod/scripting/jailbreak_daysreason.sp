@@ -31,7 +31,7 @@ public void OnPluginStart()
 
 public void OnClientPostAdminCheck(int client)
 {
-	g_iDays[client] = 1;
+	g_iDays[client] = 0;
 }
 
 public Action Event_OnRoundEnd(Handle event, const char[] name, bool dontBroadcast)
@@ -80,8 +80,15 @@ int BuildPhrases()
 			
 			if(strlen(g_cLine) > 0)
 			{
-				FormatEx(g_cDayReason[i],192, "%s", g_cLine);
+				FormatEx(g_cDayReason[i], 192, "%s", g_cLine);
 				g_iTotalLines++;
+			}
+			
+			i++;
+			
+			if(i >= sizeof(g_cDayReason)) {
+				LogError("[EverGames] Attempted to add more than the maximum allowed phrases from file!");
+				break;
 			}
 		}
 		
