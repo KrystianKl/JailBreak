@@ -7,11 +7,11 @@
 
 enum EJoinTeamReason
 {
-	k_OneTeamChange=0,
-	k_TeamsFull=1,
-	k_TTeamFull=2,
-	k_CTTeamFull=3
-}
+	k_OneTeamChange = 0,
+	k_TeamsFull = 1,
+	k_TTeamFull = 2,
+	k_CTTeamFull = 3
+};
 
 int g_iTSpawns,
 	g_iCTSpawns=-1,
