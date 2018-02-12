@@ -6,6 +6,12 @@ Games:
 - Counter Strike: Global Offensive
 - Counter Strike: Source (not tested)
 
+Events in JailBreak:
+- Normal day (Simon Day)
+- Freeday
+
+more will be added soon.
+
 Used knife models:
 - Minecraft Items - https://gamebanana.com/skins/160433
 - Blue Screwdriver - https://gamebanana.com/skins/159623
