@@ -106,38 +106,6 @@ public void OnPluginStart()
 	HookEvent("round_end", Event_EndStart);
 }
 
-public OnGameFrame()
-{
-	for(new i = 1; i < MaxClients; i++)
-	{
-		if(IsClientInGame(i) && IsPlayerAlive(i))
-		{
-			new MoveType:MT_MoveType = GetEntityMoveType(i), Float:fGravity = GetEntityGravity(i);
-			if(MT_MoveType == MOVETYPE_LADDER)
-			{
-				if(fGravity != 0.0)
-				{
-					g_fGravity[i] = fGravity;
-				}
-			}
-			else
-			{
-				if(gMT_MoveType[i] == MOVETYPE_LADDER)
-				{
-					SetEntityGravity(i, g_fGravity[i]);
-				}
-				g_fGravity[i] = fGravity;
-			}
-			gMT_MoveType[i] = MT_MoveType;
-		}
-		else
-		{
-			g_fGravity[i] = 1.0;
-			gMT_MoveType[i] = MOVETYPE_WALK;
-		}
-	}
-}
-
 public void OnMapStart()
 {
 	ClearGangsArrays();
