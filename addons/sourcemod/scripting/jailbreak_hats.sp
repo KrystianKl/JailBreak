@@ -1,12 +1,13 @@
-#include <sourcemod>
-#include <sdktools>
+#pragma newdecls required
+#pragma semicolon 1
+
 #include <sdkhooks>
 #include <clientprefs>
 #include <smartdm>
 #include <dhooks>
-#include <multicolors>
+#include <EverGames_JailBreak>
 
-#pragma newdecls required
+#define PLUGIN_NAME JB_PLUGIN_NAME ... " - Hats Menu"
 
 #define HIDE_CROSSHAIR_CSGO 1<<8
 #define HIDE_RADAR_CSGO 1<<12
@@ -44,13 +45,13 @@ Menu menu_hats, menu_editor, menu_editor2;
 
 Handle timers[MAXPLAYERS+1];
 
-public Plugin myinfo = 
+public Plugin myinfo =
 {
-	name = "[EverGames] JailBreak - Hats Menu",
+	name = PLUGIN_NAME,
 	author = "franug & Mrkl21full",
-	description = "",
-	version = "2.1",
-	url = "EverGames.pl"
+	description = JB_PLUGIN_DESCRIPTION,
+	version = JB_PLUGIN_VERSION,
+	url = JB_PLUGIN_URL
 };
 
 public void OnPluginStart()

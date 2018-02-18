@@ -1,4 +1,3 @@
-
 #include <sourcemod>
 #include <sdktools>
 #include <menus>
@@ -26,7 +25,7 @@ new Handle:MenuLR = INVALID_HANDLE;
 public Plugin:myinfo =
 {
 	name = "[EverGames] JailBreak - Last HP Fight",
-	author = "Mrkl21full™",
+	author = "Mrkl21full",
 	description = "",
 	version = "2.1",
 	url = "EverGames.pl"

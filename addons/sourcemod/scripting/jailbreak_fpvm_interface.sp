@@ -22,7 +22,7 @@ bool hook[MAXPLAYERS+1];
 public Plugin myinfo = 
 {
 	name = "[EverGames] JailBreak - FPV Models Interface",
-	author = "franug Mrkl21full",
+	author = "franug & Mrkl21full",
 	description = "",
 	version = DATA,
 	url = "EverGames.pl"
