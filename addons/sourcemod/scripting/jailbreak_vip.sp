@@ -88,6 +88,10 @@ public Action Event_OnRoundEnd(Handle event, const char[] name, bool dontBroadca
 
 public Action Event_OnPlayerDeath(Handle event, const char[] name, bool dontBroadcast)
 {
+	char CurrentRound[64];
+	JailBreak_GetRound(CurrentRound);
+	if(StrEqual(CurrentRound, "Dodgeball", false)) return Plugin_Handled;
+	
 	int client = GetClientOfUserId(GetEventInt(event, "userid"));
 	int attacker = GetClientOfUserId(GetEventInt(event, "attacker"));
 	

@@ -16,7 +16,6 @@ float g_fLastPos[MAXPLAYERS + 1][3];
 
 Handle g_hTimerList[MAXPLAYERS + 1];
 Handle g_hBeaconList[MAXPLAYERS + 1];
-Handle g_cPluginEnabled = INVALID_HANDLE;
 
 public Plugin myinfo =
 {
@@ -29,8 +28,6 @@ public Plugin myinfo =
 
 public void OnPluginStart()
 {
-	g_cPluginEnabled = CreateConVar("sm_anticamp_enable", "1", "Set to 0 to disable anti-camp");
-	
 	HookEvent("player_spawn", Event_OnPlayerSpawn, EventHookMode_PostNoCopy);
 	HookEvent("player_death", Event_OnPlayerDeath, EventHookMode_PostNoCopy);
 	HookEvent("round_end", Event_OnRoundEnd, EventHookMode_PostNoCopy);
@@ -48,9 +45,6 @@ public void OnMapStart()
 
 public Action Event_OnRoundEnd(Handle event, const char[] name, bool dontBroadcast)
 {
-	if(!GetConVarBool(g_cPluginEnabled))
-		return Plugin_Continue;
-	
 	LoopValidClients(i) {
 		if(g_hTimerList[i] != INVALID_HANDLE) {
 			KillTimer(g_hTimerList[i]);
@@ -70,9 +64,6 @@ public Action Event_OnRoundEnd(Handle event, const char[] name, bool dontBroadca
 }
 public Action Event_OnPlayerDeath(Handle event, const char[] name, bool dontBroadcast)
 {
-	if(!GetConVarBool(g_cPluginEnabled))
-		return Plugin_Continue;
-	
 	int client = GetClientOfUserId(GetEventInt(event, "userid"));
 	
 	if(g_hTimerList[client] != INVALID_HANDLE) {
@@ -87,9 +78,11 @@ public Action Event_OnPlayerDeath(Handle event, const char[] name, bool dontBroa
 }
 
 public Action Event_OnPlayerSpawn(Handle event, const char[] name, bool dontBroadcast)
-{	
-	if(!GetConVarBool(g_cPluginEnabled))
-		return Plugin_Continue;
+{
+	char CurrentRound[64];
+	JailBreak_GetRound(CurrentRound);
+	if(StrEqual(CurrentRound, "Simon", false))
+		return Plugin_Handled;
 		
 	int client = GetClientOfUserId(GetEventInt(event, "userid"));
 	
@@ -102,6 +95,11 @@ public Action Event_OnPlayerSpawn(Handle event, const char[] name, bool dontBroa
 public Action CheckCamperTimer(Handle timer, any client)
 {
 	if(!IsValidClient(client))
+		return Plugin_Handled;
+	
+	char CurrentRound[64];
+	JailBreak_GetRound(CurrentRound);
+	if(StrEqual(CurrentRound, "Simon", false))
 		return Plugin_Handled;
 
 	float currentPos[3];	

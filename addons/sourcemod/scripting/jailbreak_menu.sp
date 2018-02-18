@@ -150,14 +150,14 @@ public Action DOMenu(int client, int args)
 		if(GetClientTeam(client) == CS_TEAM_T) AddMenuItem(menu, "guard", "Bądź Strażnikiem");
 		AddMenuItem(menu, "sklep", "Sklep");
 		if(Owner(client) || Opiekun(client) || Admin(client) || VIP_Elite(client) || VIP(client)) AddMenuItem(menu, "vip", "Menu VIP");
-		AddMenuItem(menu, "gang", "Menu Gangu");
 	} else {
 		if(GetClientTeam(client) == CS_TEAM_T) AddMenuItem(menu, "guard", "Bądź Strażnikiem");
 		AddMenuItem(menu, "guns", "Wybierz broń");
 		AddMenuItem(menu, "sklep", "Sklep");
 		if(Owner(client) || Opiekun(client) || Admin(client) || VIP_Elite(client) || VIP(client)) AddMenuItem(menu, "vip", "Menu VIP");
-		AddMenuItem(menu, "gang", "Menu Gangu");
 	}
+	AddMenuItem(menu, "gang", "Menu Gangu");
+	AddMenuItem(menu, "hud", "Menu HUD'a");
 	
 	SetMenuExitButton(menu, true);
 	DisplayMenu(menu, client, MENU_TIME_FOREVER);
@@ -189,6 +189,8 @@ public int DIDMenuHandler(Handle menu, MenuAction action, int client, int itemNu
 			FakeClientCommand(client, "sm_vipm");
 		else if (strcmp(info, "gang") == 0 ) 
 			FakeClientCommand(client, "sm_gang");
+		else if (strcmp(info, "gang") == 0 ) 
+			FakeClientCommand(client, "sm_hud");
 	} else if (action == MenuAction_End) {
 		CloseHandle(menu);
 	}

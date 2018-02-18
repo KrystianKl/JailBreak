@@ -16,7 +16,7 @@ enum EJoinTeamReason
 int g_iTSpawns,
 	g_iCTSpawns=-1,
 	g_iSelectedTeam[MAXPLAYERS+1];
-
+	
 public Plugin myinfo =
 {
 	name = PLUGIN_NAME,
@@ -108,13 +108,13 @@ public Action Command_JoinTeam(int client, const char[] command, int argc)
 {
 	if(IsValidClient(client) || !argc)
 		return Plugin_Continue;
-
+	
 	char m_szTeam[8];
 	GetCmdArg(1, m_szTeam, sizeof(m_szTeam));
 	int m_iTeam = StringToInt(m_szTeam);
 
 	if(CS_TEAM_SPECTATOR <= m_iTeam <= CS_TEAM_CT)
-		g_iSelectedTeam[client]=m_iTeam;
-
+		g_iSelectedTeam[client] = m_iTeam;
+		
 	return Plugin_Continue;
 }

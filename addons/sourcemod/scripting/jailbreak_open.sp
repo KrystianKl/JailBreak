@@ -30,13 +30,15 @@ public Action Event_RoundStart(Handle event, const char[] name, bool dontBroadca
 	JailBreak_GetRound(CurrentRound);
 	
 	if(!StrEqual(CurrentRound, "Simon", false))
-		return;
+		return Plugin_Handled;
 	
 	if (g_hTimerJail != INVALID_HANDLE)
 		KillTimer(g_hTimerJail);
 		
 	g_hTimerJail = INVALID_HANDLE;
 	g_hTimerJail = CreateTimer(60.0, Timer_JailOpener);
+	
+	return Plugin_Handled;
 }
 
 public Action Command_OpenJail(int client,int args) 

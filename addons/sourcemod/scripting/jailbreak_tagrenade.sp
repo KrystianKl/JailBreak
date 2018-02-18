@@ -9,6 +9,7 @@
 
 bool g_bSeePlayers[MAXPLAYERS + 1] =  { false, ... };
 bool g_bShowAll[MAXPLAYERS + 1] =  { false, ... };
+bool g_bDayWithWH = false;
 
 public Plugin myinfo =
 {
@@ -25,6 +26,7 @@ public void OnPluginStart()
 	
 	HookEvent("player_spawn", Event_PlayerReset);
 	HookEvent("player_death", Event_PlayerReset);
+	HookEvent("round_start", Event_RoundStart);
 	HookEvent("round_end", Event_RoundReset);
 	HookEvent("tagrenade_detonate", OnTagrenadeDetonate);
 }
@@ -76,6 +78,17 @@ public void OnClientDisconnect(int client)
 	g_bSeePlayers[client] = false;
 }
 
+public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcast)
+{
+	char CurrentRound[64];
+	JailBreak_GetRound(CurrentRound);
+	
+	if(StrEqual(CurrentRound, "Grenade", false) || StrEqual(CurrentRound, "Dodgeball", false))
+		g_bDayWithWH = true;
+	
+	return Plugin_Handled;
+}
+
 public Action Event_PlayerReset(Event event, const char[] name, bool dontBroadcast)
 {
 	int client = GetClientOfUserId(event.GetInt("userid"));
@@ -88,6 +101,8 @@ public Action Event_RoundReset(Event event, const char[] name, bool dontBroadcas
 {
 	LoopValidClients(i)
 		g_bSeePlayers[i] = false;
+	
+	g_bDayWithWH = false;
 }
 
 public void OnAllPluginsLoaded()
@@ -196,13 +211,10 @@ public Action OnSetTransmit_GlowSkin(int skin, int client)
 			continue;
 	}
 	
-	if(IsFakeClient(client)) 
+	if(IsFakeClient(client) || g_bSeePlayers[client] || g_bShowAll[client] || g_bDayWithWH) 
 		return Plugin_Continue;
-	
-	if(g_bSeePlayers[client])
-		return Plugin_Continue;
-	
-	if(g_bShowAll[client])
+		
+	if(!IsPlayerAlive(client) && (Owner(client) || Opiekun(client) || Admin(client)))
 		return Plugin_Continue;
 
 	return Plugin_Handled;

@@ -9,7 +9,6 @@
 
 int CurrentCaptain = -1;
 int g_iCredits[MAXPLAYERS+1] = { 0, ... };
-int Collision_Offsets = -1;
 
 bool g_bFreeDay[MAXPLAYERS+1] = { false, ... };
 bool g_bCaptainMenu = false;
@@ -185,8 +184,6 @@ public Plugin myinfo =
 
 public void OnPluginStart()
 {
-	Collision_Offsets = FindSendPropInfo("CBaseEntity", "m_CollisionGroup");
-	
 	c_GameCredits = RegClientCookie("JailBreak_Credits", "JailBreak_Credits", CookieAccess_Private);
 	
 	Array_ShopItems = CreateArray(66);
@@ -210,6 +207,7 @@ public void OnPluginStart()
 	AddCommandListener(Command_BlockSuicide, "killvector");
 	AddCommandListener(Command_BlockSuicide, "explode");
 	AddCommandListener(Command_BlockSuicide, "explodevector");
+	AddCommandListener(Command_SelectTeam, "jointeam");
 	
 	for (int i = 0; i < sizeof(g_sRadioCMDs); i++)
 	{
@@ -220,6 +218,8 @@ public void OnPluginStart()
 	HookEvent("round_end", Event_OnRoundEnd);
 	HookEvent("player_spawn", Event_OnPlayerSpawn);
 	HookEvent("player_death", Event_OnPlayerDeath);
+	
+	CreateTimer(1.0, Timer_CheckCaptain, _, TIMER_REPEAT);
 	
 	LoopValidClients(i)
 		if(AreClientCookiesCached(i))
@@ -352,7 +352,10 @@ public int DIDMenuHandler(Handle menu, MenuAction action, int client, int itemNu
 
 public Action Event_OnRoundStart(Handle event, const char[] name, bool dontBroadcast)
 {
+	ServerCommand("sm_broomkit");
 	ServerCommand("sm_broomknife");
+	
+	JailBreak_GetRound(g_cCurrentRound);
 	
 	if(StrEqual(g_cCurrentRound, "Simon", false)) {
 		CreateTimer(2.0, Timer_MenuCaptain);
@@ -393,8 +396,6 @@ public Action Event_OnPlayerSpawn(Handle event, const char[] name, bool dontBroa
 	
 	RemoveAllWeapons(client, "weapon_knife");
 	
-	SetEntData(client, Collision_Offsets, 2, 1, true);
-	
 	CreateTimer(0.0, Timer_RemoveRadar, client);
 }
 
@@ -402,7 +403,8 @@ public Action Event_OnPlayerDeath(Handle event, const char[] name, bool dontBroa
 {
 	int client = GetClientOfUserId(GetEventInt(event, "userid"));
 	
-	if(GetClientTeam(client) == CS_TEAM_CT && CurrentCaptain == client)
+	JailBreak_GetRound(g_cCurrentRound);	
+	if(GetClientTeam(client) == CS_TEAM_CT && CurrentCaptain == client && StrEqual(g_cCurrentRound, "Simon", false))
 	{
 		new clients[MaxClients+1];
 		int clientsCount;
@@ -455,16 +457,15 @@ public void CreateMenuClient(int client)
 			}
 			
 			Format(ItemName, sizeof(ItemName),"%s", Item[ArrayIndex][Name], client);
-			
-			switch(Item[ArrayIndex][Team])
-			{
-				case JB_GUARDS: continue;
-				case JB_PRISIONERS: continue;
-				case JB_BOTH: continue;
-			}
-			
 			Format(MenuItem, sizeof(MenuItem),"%s - %i kredytów", ItemName, Item[ArrayIndex][Price]);
-			AddMenuItem(g_hMenu[client], Item[ArrayIndex][Name], MenuItem);
+			
+			if(GetClientTeam(client) == CS_TEAM_CT && Item[ArrayIndex][Team] == JB_GUARDS) {
+				AddMenuItem(g_hMenu[client], Item[ArrayIndex][Name], MenuItem);
+			} else if(GetClientTeam(client) == CS_TEAM_T && Item[ArrayIndex][Team] == JB_PRISIONERS) {
+				AddMenuItem(g_hMenu[client], Item[ArrayIndex][Name], MenuItem);
+			} else if(Item[ArrayIndex][Team] == JB_BOTH) {
+				AddMenuItem(g_hMenu[client], Item[ArrayIndex][Name], MenuItem);
+			}
 			
 			RemoveFromArray(Array_ShopItems_Clon, ArrayIndex);
 		}
@@ -507,6 +508,15 @@ public void setCaptain(int client)
 	Call_StartForward(OnCaptainSet);
 	Call_PushCell(CurrentCaptain);
 	Call_Finish();
+}
+
+public Action Timer_CheckCaptain(Handle timer)
+{
+	if(CurrentCaptain > 0)
+		LoopValidClients(i)
+			if(i == CurrentCaptain)
+				if(GetClientTeam(i) != CS_TEAM_CT || !IsPlayerAlive(i))
+					removeCaptain(i, 0);
 }
 
 public Action Timer_MenuCaptain(Handle timer)
@@ -696,10 +706,18 @@ public Action Command_BlockSuicide(int client, const char[] command, int args)
 	return Plugin_Handled;
 }
 
-public void OnEntityCreated(int entity, const char[] classname)
+public Action Command_SelectTeam(int client, const char[] command, int args)
 {
-	if(StrContains(classname, "_projectile") != -1)
+	if(IsValidClient(client)) 
 	{
-		SetEntData(entity, Collision_Offsets, 2, 1, true);
+		char g_cTeam[2];
+        GetCmdArg(1, g_cTeam, sizeof(g_cTeam));
+		
+		switch (StringToInt(g_cTeam)) 
+		{
+			case CS_TEAM_SPECTATOR: if(client == CurrentCaptain) removeCaptain(client, 0);
+			case CS_TEAM_T: if(client == CurrentCaptain) removeCaptain(client, 0);
+			case CS_TEAM_CT: if(client == CurrentCaptain && !IsPlayerAlive(client)) removeCaptain(client, 0);
+		}
 	}
 }
