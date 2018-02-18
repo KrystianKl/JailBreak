@@ -1,0 +1,237 @@
+"Hats"
+{
+	"Brak"
+	{
+		"model"		"none"
+	}
+	"Porcelain Doll"
+	{
+		"model"		"models/player/holiday/facemasks/porcelain_doll.mdl"
+		"flag"		"a"
+	}
+	"Zombie Fortune"
+	{
+		"model"		"models/player/holiday/facemasks/facemask_zombie_fortune_plastic.mdl"
+		"flag"		"a"
+	}
+	"Wolf"
+	{
+		"model"		"models/player/holiday/facemasks/facemask_wolf.mdl"
+		"flag"		"a"
+	}
+	"Tiki"
+	{
+		"model"		"models/player/holiday/facemasks/facemask_tiki.mdl"
+		"flag"		"a"
+	}
+	"Spy"
+	{
+		"model"		"models/player/holiday/facemasks/facemask_tf2_spy_model.mdl"
+		"flag"		"a"
+	}
+	"Soldier"
+	{
+		"model"		"models/player/holiday/facemasks/facemask_tf2_soldier_model.mdl"
+		"flag"		"a"
+	}
+	"Sniper"
+	{
+		"model"		"models/player/holiday/facemasks/facemask_tf2_sniper_model.mdl"
+		"flag"		"a"
+	}
+	"Scout"
+	{
+		"model"		"models/player/holiday/facemasks/facemask_tf2_scout_model.mdl"
+		"flag"		"a"
+	}
+	"Pyro"
+	{
+		"model"		"models/player/holiday/facemasks/facemask_tf2_pyro_model.mdl"
+		"flag"		"a"
+	}
+	"Medic"
+	{
+		"model"		"models/player/holiday/facemasks/facemask_tf2_medic_model.mdl"
+		"flag"		"a"
+	}
+	"Heavy"
+	{
+		"model"		"models/player/holiday/facemasks/facemask_tf2_heavy_model.mdl"
+		"flag"		"a"
+	}
+	"Engineer"
+	{
+		"model"		"models/player/holiday/facemasks/facemask_tf2_engi_model.mdl"
+		"flag"		"a"
+	}
+	"Demoman"
+	{
+		"model"		"models/player/holiday/facemasks/facemask_tf2_demo_model.mdl"
+		"flag"		"a"
+	}
+	"Skull"
+	{
+		"model"		"models/player/holiday/facemasks/facemask_skull.mdl"
+		"flag"		"a"
+	}
+	"Skull (Gold)"
+	{
+		"model"		"models/player/holiday/facemasks/facemask_skull_gold.mdl"
+		"flag"		"a"
+	}
+	"Sheep"
+	{
+		"model"		"models/player/holiday/facemasks/facemask_sheep_model.mdl"
+		"flag"		"a"
+	}
+	"Sheep (Gold)"
+	{
+		"model"		"models/player/holiday/facemasks/facemask_sheep_gold.mdl"
+		"flag"		"a"
+	}
+	"Sheep (Bloody)"
+	{
+		"model"		"models/player/holiday/facemasks/facemask_sheep_bloody.mdl"
+		"flag"		"a"
+	}
+	"Samurai"
+	{
+		"model"		"models/player/holiday/facemasks/facemask_samurai.mdl"
+		"flag"		"a"
+	}
+	"Pumpkin"
+	{
+		"model"		"models/player/holiday/facemasks/facemask_pumpkin.mdl"
+		"flag"		"a"
+	}
+	"Porcelain Doll Kabuki"
+	{
+		"model"		"models/player/holiday/facemasks/facemask_porcelain_doll_kabuki.mdl"
+		"flag"		"a"
+	}
+	"Hoxton"
+	{
+		"model"		"models/player/holiday/facemasks/facemask_hoxton.mdl"
+		"flag"		"a"
+	}
+	"Devil"
+	{
+		"model"		"models/player/holiday/facemasks/facemask_devil_plastic.mdl"
+		"flag"		"a"
+	}
+	"Dallas"
+	{
+		"model"		"models/player/holiday/facemasks/facemask_dallas.mdl"
+		"flag"		"a"
+	}
+	"Chicken"
+	{
+		"model"		"models/player/holiday/facemasks/facemask_chicken.mdl"
+		"flag"		"a"
+	}
+	"Chains"
+	{
+		"model"		"models/player/holiday/facemasks/facemask_chains.mdl"
+		"flag"		"a"
+	}
+	"Bunny"
+	{
+		"model"		"models/player/holiday/facemasks/facemask_bunny.mdl"
+		"flag"		"a"
+	}
+	"Bunny (Gold)"
+	{
+		"model"		"models/player/holiday/facemasks/facemask_bunny_gold.mdl"
+		"flag"		"a"
+	}
+	"Boar"
+	{
+		"model"		"models/player/holiday/facemasks/facemask_boar.mdl"
+		"flag"		"a"
+	}
+	"Anaglyph"
+	{
+		"model"		"models/player/holiday/facemasks/facemask_anaglyph.mdl"
+		"flag"		"a"
+	}
+	"Evil Clown"
+	{
+		"model"		"models/player/holiday/facemasks/evil_clown.mdl"
+		"flag"		"a"
+	}
+	"Santa Hat"
+	{
+		"model"		"models/player/holiday/santahat.mdl"
+		"flag"		"a"
+		"position"		"-0.500000 -2.000000 5.000000"
+		"angles"		"0.000000 -0.500000 0.000000"
+		"playermodels"
+		{
+			"models&player&custom_player&legacy&tm_leet_variantA.mdl"
+			{
+				"position"		"-2.500000 -6.000000 -0.500000"
+				"angles"		"1.000000 18.500000 15.000000"
+			}
+			"models&player&custom_player&kuristaja&jailbreak&prisoner1&priso"
+			{
+				"position"		"-2.500000 -6.500000 -2.000000"
+				"angles"		"0.000000 18.500000 15.000000"
+			}
+			"models&player&custom_player&kuristaja&jailbreak&prisoner7&priso"
+			{
+				"position"		"-1.500000 -5.000000 -3.500000"
+				"angles"		"0.000000 18.500000 15.000000"
+			}
+			"models&player&custom_player&kuristaja&jailbreak&prisoner3&priso"
+			{
+				"position"		"-2.000000 -6.000000 -2.500000"
+				"angles"		"0.000000 18.500000 15.000000"
+			}
+			"models&player&custom_player&kuristaja&jailbreak&prisoner5&priso"
+			{
+				"position"		"-2.500000 -6.000000 -1.500000"
+				"angles"		"0.000000 18.500000 15.000000"
+			}
+			"models&player&custom_player&kuristaja&jailbreak&guard5&guard5.m"
+			{
+				"position"		"-2.500000 -5.500000 -1.000000"
+				"angles"		"0.000000 18.500000 15.000000"
+			}
+			"models&player&custom_player&kuristaja&jailbreak&guard4&guard4.m"
+			{
+				"position"		"-2.500000 -6.000000 -2.000000"
+				"angles"		"0.000000 18.500000 15.000000"
+			}
+			"models&player&custom_player&kuristaja&jailbreak&guard2&guard2.m"
+			{
+				"position"		"-2.000000 -6.500000 -3.500000"
+				"angles"		"0.000000 18.500000 15.000000"
+			}
+			"models&player&custom_player&kuristaja&jailbreak&guard1&guard1.m"
+			{
+				"position"		"-2.000000 -6.000000 -2.500000"
+				"angles"		"0.000000 18.500000 15.000000"
+			}
+			"models&player&custom_player&kuristaja&jailbreak&guard3&guard3.m"
+			{
+				"position"		"-3.000000 -6.000000 0.000000"
+				"angles"		"0.000000 18.500000 15.000000"
+			}
+			"models&player&custom_player&kuristaja&jailbreak&prisoner4&priso"
+			{
+				"position"		"-2.000000 -5.500000 -2.500000"
+				"angles"		"0.000000 18.500000 15.000000"
+			}
+			"models&player&custom_player&kuristaja&jailbreak&prisoner6&priso"
+			{
+				"position"		"-2.000000 -6.000000 -2.500000"
+				"angles"		"0.000000 18.500000 15.000000"
+			}
+			"models&player&custom_player&kuristaja&jailbreak&prisoner2&priso"
+			{
+				"position"		"-2.000000 -5.500000 -2.500000"
+				"angles"		"0.000000 18.500000 15.000000"
+			}
+		}
+	}
+}
