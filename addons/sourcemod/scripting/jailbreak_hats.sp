@@ -1,4 +1,4 @@
-#pragma newdecls required
+//#pragma newdecls required
 #pragma semicolon 1
 
 #include <sdkhooks>

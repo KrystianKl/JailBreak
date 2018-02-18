@@ -4,7 +4,7 @@
 #include <adminmenu>
 #include <cstrike>
 #include <colors>
-#include <jailbreak_ctbans>
+#include <EverGames_CTBans>
 #include <EverGamesTime>
 
 #define VERSION	"2,1"
@@ -470,7 +470,7 @@ public Action:Command_Guard(client, args)
 			}
 		} // end Azelphur Team Bans check
 	
-		if(JB_IsCTBanned(client)) {
+		if(JailBreak_IsCTBanned(client)) {
 			decl String:buffer[PLATFORM_MAX_PATH + 5];
 			Format(buffer, sizeof(buffer), "play %s", gShadow_Cvar_SoundName);
 			ClientCommand(client, buffer);
@@ -690,7 +690,7 @@ public Action:Event_RoundEnded(Handle:event, const String:name[], bool:dontBroad
 	      			else
 	      			{
 	      				// player isn't banned so switch normally
-	      		      	if (IsClientInGame(Switch_ID) && !JB_IsCTBanned(Switch_ID))
+	      		      	if (IsClientInGame(Switch_ID) && !JailBreak_IsCTBanned(Switch_ID))
 	      		      	{
 	      				      if (!IsFakeClient(Switch_ID))
 	      				      {
