@@ -1,0 +1,1 @@
+native bool JailBreak_IsCTBanned(int client);
